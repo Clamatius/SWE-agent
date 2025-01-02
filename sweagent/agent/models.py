@@ -32,6 +32,7 @@ from sweagent.exceptions import (
 from sweagent.tools.tools import ToolConfig
 from sweagent.types import History, HistoryItem
 from sweagent.utils.log import get_logger
+from sweagent.utils.token_rate_limiter import TokenRateLimiter
 
 try:
     import readline  # noqa: F401
@@ -444,6 +445,7 @@ class LiteLLMModel(AbstractModel):
         self.model_max_output_tokens = litellm.model_cost.get(self.args.name, {}).get("max_output_tokens")
         self.lm_provider = litellm.model_cost[self.args.name]["litellm_provider"]
         self.logger = get_logger("swea-lm", emoji="🤖")
+        self.rate_limiter = TokenRateLimiter(tokens_per_minute=args.rate_limit) if args.rate_limit else None
 
     def _update_stats(self, *, input_tokens: int, output_tokens: int, cost: float) -> None:
         with GLOBAL_STATS_LOCK:
@@ -503,6 +505,10 @@ class LiteLLMModel(AbstractModel):
         completion_kwargs = self.args.completion_kwargs
         if self.lm_provider == "anthropic":
             completion_kwargs["max_tokens"] = self.model_max_output_tokens
+            
+        # Apply rate limiting if configured
+        if self.rate_limiter:
+            self.rate_limiter.wait_if_needed(input_tokens)
         response: litellm.types.utils.ModelResponse = litellm.completion(  # type: ignore
             model=self.args.name,
             messages=messages,
