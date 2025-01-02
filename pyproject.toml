@@ -255,5 +255,10 @@ ACI = "ACI"
 # Don't correct the surname "Teh"
 aci = "aci"
 
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4",
+]
+
 [tool.ruff.lint.isort]
 # required-imports = ["from __future__ import annotations"]

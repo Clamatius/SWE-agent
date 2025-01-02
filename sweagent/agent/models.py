@@ -97,6 +97,11 @@ class GenericAPIModelConfig(PydanticBaseModel):
     it with other people).
     """
 
+    rate_limit: int | None = None
+    """Maximum number of tokens that can be sent per minute. If None, no rate limit is applied.
+    This is useful for API providers that have rate limits, like Anthropic's 40k tokens/minute limit.
+    """
+
     fallbacks: list[dict[str, Any]] = []
     """List of fallbacks to try if the main model fails
     See https://docs.litellm.ai/docs/completion/reliable_completions#fallbacks-sdk

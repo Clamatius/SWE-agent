@@ -21,3 +21,19 @@ def test_litellm_mock():
         ),
     )
     assert model.query(History([{"role": "user", "content": "Hello, world!"}])) == {"message": "Hello, world!"}  # type: ignore
+
+def test_rate_limit_config():
+    # Test that rate_limit can be set to None (default)
+    model_config = GenericAPIModelConfig(
+        name="claude-3-5-sonnet-20241022",
+        api_key=SecretStr("dummy_key"),
+    )
+    assert model_config.rate_limit is None
+
+    # Test that rate_limit can be set to a specific value
+    model_config = GenericAPIModelConfig(
+        name="claude-3-5-sonnet-20241022",
+        api_key=SecretStr("dummy_key"),
+        rate_limit=40000,
+    )
+    assert model_config.rate_limit == 40000
