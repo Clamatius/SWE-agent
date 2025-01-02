@@ -8,5 +8,5 @@ fi
 
 sweagent run --config config/default.yaml --agent.model.name "claude-3-5-sonnet-20241022" \
 	 --env.repo.path . \
-	 --agent.model.delay=30.0 \
+	 --agent.model.rate_limit=40000 \
 	 --problem_statement.path=$1
