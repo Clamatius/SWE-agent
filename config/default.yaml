@@ -118,6 +118,9 @@ agent:
       # - path: tools/edit_linting
       - path: tools/edit_replace
       - path: tools/submit
+      - path: tools/edit_anthropic
+      - path: tools/remember
+      - path: tools/recall
     enable_bash_tool: true
     parse_function:
       type: function_calling

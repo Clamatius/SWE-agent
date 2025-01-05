@@ -1,7 +1,7 @@
 tools:
   recall:
     signature: |
-      recall <memory_area> <query> [limit]
+      recall <memory_area> <query>
     docstring: >
       Search long-term memory for relevant information using semantic search.
       Use this tool proactively to provide context-aware assistance.
@@ -32,7 +32,3 @@ tools:
         type: string
         description: "Natural language search query - will be semantically matched"
         required: true
-      - name: limit
-        type: integer
-        description: "Maximum number of memories to return (default: 5)"
-        required: false
