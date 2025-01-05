@@ -1,0 +1,38 @@
+tools:
+  recall:
+    signature: |
+      recall <memory_area> <query> [limit]
+    docstring: >
+      Search long-term memory for relevant information using semantic search.
+      Use this tool proactively to provide context-aware assistance.
+
+      Usage Guidelines:
+      - At the start of conversations: Query 'human' area to recall user context
+      - When starting new tasks: Search 'archival' for related past work
+      - Before making recommendations: Check past preferences and decisions
+      - When unsure about user context: Search across all areas
+      
+      Search Strategies:
+      - Use natural language queries - the semantic search understands concepts
+      - Start broad then narrow down if too many results
+      - Search 'all' when the relevant memory area isn't clear
+      - Consider searching with different phrasings if initial results aren't helpful
+
+      Memory Areas:
+      - core: Critical facts injected into every session
+      - human: User preferences, expertise, and context
+      - archival: Past tasks, decisions, and technical details
+      - all: Search across all memory areas
+    arguments:
+      - name: memory_area
+        type: string
+        description: "Where to search: 'core', 'human', 'archival', or 'all'"
+        required: true
+      - name: query
+        type: string
+        description: "Natural language search query - will be semantically matched"
+        required: true
+      - name: limit
+        type: integer
+        description: "Maximum number of memories to return (default: 5)"
+        required: false
