@@ -7,9 +7,9 @@ if [ "$#" -lt 1 ]; then
 fi
 
 
-
 sweagent run --config config/default.yaml --agent.model.name "claude-3-5-sonnet-20241022" \
 	 --env.repo.path ../llm-memory \
 	 --agent.model.rate_limit=40000 \
+	 --env.deployment.docker_args="[\"--mount\", \"type=bind,src=/var/llm_memory,dst=/var/llm_memory\"]" \
 	 --env.deployment.image=memory-swe-rex \
 	 --problem_statement.path=$1
