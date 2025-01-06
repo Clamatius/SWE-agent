@@ -512,7 +512,7 @@ class LiteLLMModel(AbstractModel):
             #self.rate_limiter.wait_if_needed(input_tokens)
             wait_time = self.rate_limiter.get_wait_time(input_tokens, time.time())
             if wait_time > 0:
-                self.logger.info(f"Sleeping to due to wait limit for {wait_time}")
+                self.logger.info(f"Sleeping due to rate limit for {wait_time}")
                 time.sleep(wait_time)
             else:
                 self.logger.info("No need to sleep. Rate limit not exceeded.")
